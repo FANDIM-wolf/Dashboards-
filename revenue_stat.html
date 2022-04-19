@@ -1,0 +1,220 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+      <meta charset="UTF-8">
+    </head>
+        <body>
+            <style>
+                h2{
+                    font-family: Arial;
+                    color:orange;
+                }
+                h1{
+                    font-family: Arial;
+                }
+                a{
+                    font-family: Arial;
+                    text-decoration: none;
+                    color:black;
+                    font-size: 25px;
+                }
+                a:hover{
+                    font-family: Arial;
+                    text-decoration: none;
+                    color:black;
+                    font-size: 25px;
+                }
+                .canvas-container {
+      display: flex;
+      width: 100%;
+
+
+    }
+    .canvas-container_2 {
+      display: flex;
+      width: 100%;
+
+
+    }
+
+    .cv {
+      width: 600px;
+      height: 400px;
+      padding: 20;
+
+    }
+
+            </style>
+
+
+
+            <a href="components/sold_good.html">Посмотреть Проданный товар</a>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="tools.js"></script>
+            <script src="add_charts.js"></script>
+            <script src="auxiliary_tools.js"></script>
+            <script>
+
+
+            var json = `
+            [{"name":"ТЭНЭЛЭВЭН ООО","revenue":60652.16,"month":1},
+            {"name":"ХАЙЛЕР ООО","revenue":1745893.23,"month":1},
+        {"name":"Куканянц Ирина Юрьевна ИП","revenue":5614468.24,"month":1},
+        {"name":"Куканянц Вазген Карабедович ИП","revenue":5517670.38,"month":1},
+        {"name":"Куканянц Каро Шагенович ИП","revenue":392396.22,"month":1},
+        {"name":"Куканянц Карине ИП","revenue":184997.68,"month":1},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":46825.54,"month":1},
+        {"name":"ТЭНЭЛЭВЭН ООО","revenue":60652.16,"month":2},
+        {"name":"ХАЙЛЕР ООО","revenue":1745893.23,"month":2},
+        {"name":"Куканянц Ирина Юрьевна ИП","revenue":5614468.24,"month":2},
+        {"name":"Куканянц Вазген Карабедович ИП","revenue":5517670.38,"month":2},
+        {"name":"Куканянц Каро Шагенович ИП","revenue":392396.22,"month":2},
+        {"name":"Куканянц Карине ИП","revenue":184997.68,"month":2},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":46825.54,"month":2},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":465.54,"month":3},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":468322.54,"month":3},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":468235.54,"month":3},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":468235.54,"month":3},
+        {"name":"ФЭШН ТЭХНОЛОДЖИЗ ООО","revenue":468235.54,"month":3}
+    ]
+
+
+             `;
+     //consumtions data
+     var third_names = ["" , " " , " " , " " , " " ,  " " , " "];
+    var array_of_company_revenue_third = create_array_of_revenues();
+
+      var array_of_names= [];
+      var array_of_revenue_for_months = [0,0,0,0];
+
+      async function Process_data_revenue(){
+
+
+              var result = JSON.parse(json);
+
+              var current_month =  result[0].month;
+              console.log(current_month);
+              for(var i = 0 ; i < result.length; i++){
+                 if(result[i].month == current_month){
+
+                    array_of_revenue_for_months[current_month-1] += parseInt(result[i].revenue);
+                    console.log(result[i].month);
+                 }
+                 else{
+                    current_month = result[i].month;
+                    array_of_revenue_for_months[current_month-1] += parseInt(result[i].revenue);
+                 }
+              }
+
+
+            }
+
+
+
+    function Create_chart(){
+        const data = {
+      labels: ["1","2","3","4"],
+
+      datasets: [{
+        type: 'bar',
+        label: 'Bar Dataset',
+        data: array_of_revenue_for_months,
+        borderColor: 'rgb(255, 144, 0)',
+        backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+      }, {
+        type: 'line',
+        label: 'Line Dataset',
+        data: array_of_revenue_for_months,
+        fill: false,
+        borderColor: 'rgb(0, 0, 0)'
+      }]
+    };;
+
+    const config = {
+      type: 'scatter',
+      data: data,
+      options: {
+        scales: {
+          y: {
+            beginAtZero: false
+          }
+        },
+        layout: {
+
+        }
+      }
+    };
+
+    window.myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+      );
+      document.getElementById("r").innerHTML= "Выручка в текущем месяце";
+      //document.getElementById("result").innerHTML = result_of_month+" "+"RUB";
+    }
+
+    //consumption
+    function Create_chart_consumptions(){
+       console.log("Result of expenses:",third_names);
+        const data = {
+            labels: third_names,
+
+            datasets: [{
+              type: 'line',
+              label: "Расходы",
+              data: array_of_company_revenue_third,
+              borderColor: 'rgb(255, 144, 0)',
+              backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+            } ]
+
+
+
+
+          };;
+
+          const config = {
+            type: 'scatter',
+            data: data,
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true
+                }
+              },
+              layout: {
+                      padding:0
+              }
+            }
+          };
+
+          var result_of_consumption = 0;
+
+          result_of_consumption= summ_of_array(array_of_company_revenue_third);
+          console.log(result_of_consumption)
+          window.myChart_trade_revenue = new Chart(
+              document.getElementById('myChart'),
+              config
+            );
+
+
+            document.getElementById("result_one").innerHTML = result_of_consumption;
+            document.getElementById("r_one").innerHTML= "Выручка в текущем месяце";
+    }
+
+
+
+
+
+    get_data_about_consumptions(third_names , array_of_company_revenue_third , "month");
+    setTimeout(Create_chart_consumptions ,2000);
+
+    //setTimeout(Process_data_revenue,3000);
+    //setTimeout(Create_chart,4000);
+
+
+
+
+            </script>
+        </body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hayler Dashboards</title> 
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat:wght@200;300&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+<link href="main_style.css" rel="stylesheet">
+</head>
+<body>
+    
+
+    
+    
+
+        <br>
+        <form id="radio">   
+
+          <p>Результаты за:</p>
+      
+       <div class="options_style">   
+      <div>
+          <input type="radio" name="size" class="text" value="month" id="button_radio">
+          <label for="s">Месяц</label>
+      </div>
+      <div>
+          <input type="radio" name="size" class="text" value="week" id="button_radio">
+          <label for="m">Неделя</label>
+      </div>
+      <div>
+          <input type="radio" name="size" class="text" value="day" id="button_radio">
+          <label for="l">День</label>
+      </div>
+       </div>
+      </form>
+    
+<br>
+      <div class="block_buttons">
+        
+        <div class="buttons"> 
+
+          <button nonce="32rd24"  id="search_button">Показать данные</button>
+          <button nonce="32rd24"  id="button_brands"><a href="brands.html">Доля  брендов</a></button>
+          <button nonce="32rd24"  id="button_companies"><a href="companies.html">Доля  компаний</a></button>
+                <button nonce="32rd24" id="button_companies"><a href="revenue_stat.html">Доп. просмотр</a></button>
+         <button id="delete_button" onclick="clear_data()">Очистить данные</button>
+          
+      </div>
+
+      <p id="output"></p>
+        
+        
+        
+
+      
+
+       
+
+      
+         
+     
+        
+        
+
+        
+        <div class="canvas-container">
+            
+            <div>
+            <p id="r"></p>
+         
+              <h2 id="result"></h2>  
+            <canvas class="cv" id="DoubleChart"></canvas>
+            </div>
+           
+          </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="tools.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script>
+          //{"HTTPService":"H5cnysFppEwVb9412*ff20#98243@"}
+       // axios.get('http://1c.hayler.ru/work/hs/Revenue/V1/Revenue',{ params: { login:HTTPService , password:"H5cnysFppEwVb9412*ff20#98243@" } }).then(res => {
+         // console.log(res.data); // Результат ответа от сервера
+        //});
+
+        //HTTPService:H5cnysFppEwVb9412*ff2098243@
+        document.getElementById("search_button").onclick = function(){
+          start_process();
+        }
+        
+
+        
+          /*
+          teneleven, joe lo, jasson lo, miss tais, topface, bellucci, fabio, elitaro, santini, hoco, borofone
+          */
+            
+
+           
+        
+
+
+        
+
+         //form data id="radio"
+         var form = document.querySelector("#radio");
+          var array_of_names  = [];
+          var result_of_month ;
+          //per month
+          var names = [];
+          var array_of_company_revenue= [];
+
+          var array_of_names_year = [];
+          let array_of_revenues_year = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+          var  result_of_year ; 
+
+          // brand per year
+          //var name = document.getElementById("s1").value;
+          var array_of_labels = ["Январь" , "Февраль" , "Март" , "Апрель" , "Май" , "Июнь" , "Июль" , "Август" , "Сентябрь" , "Октябрь" , "Ноябрь" ,"Декабрь"];
+          let array_of_revenue = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+          var type_of_date; //month , week , day ;
+          var date_for_data = " " ;
+// calculate data for brand 
+
+async function process_data_for_brand( type_of_date){
+    
+    console.log(type_of_date);
+    if(type_of_date == "month"){
+     
+      Process_data_revenue();
+      setTimeout(Create_chart,3000);
+      
+
+    }
+    if(type_of_date == "week"){
+
+      
+      
+      Process_data_revenue_per_week();
+      setTimeout(Create_chart,3000);
+    }
+
+    if(type_of_date == "day"){
+      Process_data_revenue_per_day();
+      setTimeout(Create_chart,5000);
+    }
+
+}
+
+async function Process_data_revenue_per_day(){
+    
+
+          let token = "Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi";
+        let response = await fetch('http://1c.hayler.ru/api/hs/revenue/brands/day?token='+token);
+        console.log(response);
+        var result = await response.json();
+        
+        for ( var i =0; i<result.length; i++){
+           names[i] = result[i].name;
+           array_of_company_revenue[i] = result[i].revenue;
+           console.log(result[i].revenue)
+        }
+        
+
+        }
+        
+async function Process_data_revenue_per_week(){
+    
+
+    let token = "Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi";
+    let response = await fetch('http://1c.hayler.ru/api/hs/revenue/brands/week?token='+token);
+    console.log(response);
+    var result = await response.json();
+  
+    for ( var i =0; i<result.length; i++){
+      names[i] = result[i].name;
+      array_of_company_revenue[i] = result[i].revenue;
+      console.log(result[i].revenue)
+    }
+  
+
+}       
+
+
+  async function Process_data_revenue(){
+    
+          let token = "Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi";
+        let response = await fetch('http://1c.hayler.ru/api/hs/revenue/brands/month?token='+token);
+        type_of_date = "month";
+        console.log(response);
+        var result = await response.json();
+        
+        for ( var i =0; i<result.length; i++){
+           names[i] = result[i].name;
+           array_of_company_revenue[i] = result[i].revenue;
+        }
+        
+
+        }
+
+// return data per year 
+async function Process_data_revenue_year(){
+
+
+
+
+var data= await fetch("http://localhost/test_api/read.php");
+console.log(data);
+var result = await data.json();
+temp = result[0].name ;
+count = 0;
+//var array_of_revenues = [0];
+
+//get list of names 
+for(var i = 0 ; i< result.length; i++){
+   if(result[i].name ==  temp){
+      array_of_names_year[count] = result[i].name;
+      array_of_revenues_year[count] += result[i].revenue;
+      
+   }
+   else{
+      count++;
+      temp = result[i].name; 
+      array_of_names_year[count] = result[i].name;
+      array_of_revenues_year[count] += result[i].revenue;
+      
+   }
+} 
+
+//get result per month 
+
+result_of_year = parseInt(summ_of_array(array_of_revenues_year));
+
+}
+
+function Create_chart(){
+    const data = {
+  labels: names, 
+  
+  datasets: [{
+    label: 'Доля компаний',
+    data: array_of_company_revenue,
+    backgroundColor: [
+      'rgb(255, 99, 132)',
+      
+      'rgb(255, 205, 86)',
+      'rgb(24,0,237)',
+      'rgb(255, 91, 177)',
+      'rgb(13, 255, 13)',
+      'rgb(255,0,0)'
+    ],
+    hoverOffset: 4
+  }]
+};;
+
+const config = {
+  type: 'doughnut',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding: 0
+    }
+  }
+};
+result_of_month = summ_of_array(array_of_company_revenue);
+window.myChart_month = new Chart(
+    document.getElementById('DoubleChart'),
+    config
+  );
+  
+  //console.log(date_for_data);
+  //document.getElementById("r").innerHTML= date_for_data;
+  document.getElementById("result").innerHTML = result_of_month+" "+"RUB";
+}        
+
+function Create_chart_year(){
+    const data = {
+  labels: array_of_names_year, 
+  
+  datasets: [{
+    type: 'line',
+    label: 'Bar Dataset',
+    data: [1623,422,3223,323,32],
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Line Dataset',
+    data: [343,523,32,11,32],
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding:90
+    }
+  }
+};
+
+window.myChart_year = new Chart(
+    document.getElementById('ThirdChart'),
+    config
+  );
+  if (type_of_date == "month"){
+      date_for_data = "Выручка за месяц";
+  }
+  if (type_of_date == "week"){
+     date_for_data = "Выручка за неделю";
+  }
+  if (type_of_date == "day"){
+     date_for_data = "Выручка за день";
+  }
+  document.getElementById("r_year").innerHTML= date_for_data;
+  document.getElementById("result_year").innerHTML = result_of_year+" "+"RUB";
+}    
+
+
+function Create_chart_for_company(array_of_labels , array_of_revenue){
+    const data = {
+  labels: array_of_labels, 
+  
+  datasets: [{
+    type: 'bar',
+    label: 'Bar Dataset',
+    data: array_of_revenue,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Line Dataset',
+    data: array_of_revenue,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding: 0
+    }
+  }
+};
+
+window.myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+ 
+  
+}    
+
+
+//clear and destroy chart 
+function clear_data(){
+  
+  document.getElementById("r").innerHTML= " ";
+  document.getElementById("result").innerHTML = " ";
+  for(var i = 0 ; i< array_of_revenue.length;i++){
+     array_of_revenue[i]  = 0;
+     console.log(array_of_revenue[i]);
+  }
+  for(var i = 0 ; i< array_of_company_revenue.length;i++){
+     array_of_company_revenue[i]  = 0;
+     console.log(array_of_company_revenue[i]);
+  }
+  type_of_date = " ";
+  myChart_month.destroy();
+  //myChart.destroy();
+  
+  
+}
+
+async function start_process()
+{
+  //select  interval 
+  var data = new FormData(form);
+  var output = "";
+  for (const entry of data) {
+    output =  entry[1];
+  };
+  console.log(output)
+  //await console.log(selectedOption);
+ // var name = document.getElementById("s1").value;
+
+ 
+
+  process_data_for_brand(output);
+  //setTimeout(Create_chart_for_company,2000);
+}
+
+
+
+
+//setTimeout(Create_chart_year,6000);  
+
+;
+
+//make_fetch();
+
+//Process_data_revenue_year();
+
+
+
+        </script>
+</body>
+</html>
