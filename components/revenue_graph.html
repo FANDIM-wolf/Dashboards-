@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hayler Dashboards</title> 
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat:wght@200;300&family=Ubuntu:wght@500&display=swap" rel="stylesheet">
+
+<link href="main_style_components.css" rel="stylesheet">
+</head>
+
+<body>
+    
+
+   
+
+<input type="date" id="dateSince">
+<input type="date" id="dateTo">
+
+        <br>
+      <form id="radio">   
+
+        <p>Результаты за:</p>
+    
+     <div class="options_style">   
+    <div>
+        <input type="radio" name="size" class="text" value="month" id="button_radio">
+        <label for="s">Месяц</label>
+    </div>
+    <div>
+        <input type="radio" name="size" class="text" value="week" id="button_radio">
+        <label for="m">Неделя</label>
+    </div>
+    <div>
+        <input type="radio" name="size" class="text" value="day" id="button_radio">
+        <label for="l">День</label>
+    </div>
+     </div>
+    </form>
+    
+<br>
+      <div class="block_buttons">
+        
+        <div class="buttons"> 
+          <div> 
+          <button nonce="32rd24"  id="search_button">Показать данные</button>
+
+         <button id="delete_button" onclick="clear_data()">Очистить данные</button>
+         </div>
+      
+         
+          
+      </div>
+
+      <p id="output"></p>
+        
+        
+        
+
+
+  </div>
+
+      <p>v1.0.1</p>
+
+  </div>
+     
+        
+        
+
+            <p>Выручка</p>
+
+            <div> 
+            <p id="r_one"></p>
+           
+            <h2 id="result_one"></h2>
+            
+            <canvas class="cv" width="100" height="25" id="one"></canvas>
+            </div>
+            <div>
+              
+              
+
+
+
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="tools.js"></script>
+
+
+        <script src="auxiliary_tools.js"></script>
+
+        <script>
+      
+
+
+      
+        let token = "Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi";
+     
+                 //{"HTTPService":"H5cnysFppEwVb9412*ff20#98243@"}
+       
+
+        //HTTPService:H5cnysFppEwVb9412*ff2098243@
+        document.getElementById("search_button").onclick = function(){
+          start_process();
+        }
+        
+
+        
+          /*
+          teneleven, joe lo, jasson lo, miss tais, topface, bellucci, fabio, elitaro, santini, hoco, borofone
+          */
+            
+
+         week = 0;
+         counter = 0;  
+         //form data id="radio"
+         var form = document.querySelector("#radio");
+          var array_of_names  = [];
+          var result_of_month ;
+          //first chart  revenue
+          var names = ["s" , " " , " " , " " , " "];
+          var days_line_y = [0];
+          var array_of_company_revenue = [0];
+          var array_of_company_revenue_week = [0,0,0,0,0,0,0,0]
+          //second chart trading profit
+          var second_names = ["" ," " ," "];
+          var second_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_second = create_array_of_revenues();
+          var result_of_trade ;
+          //third chart consumptions 
+          var third_names = [" " , " "  , " " , " " , " " , " "];
+          var third_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_third = create_array_of_revenues();
+          //fourth chart 
+          var fourth_names = [" ", " " , " "];
+          var fourth_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_fourth = create_array_of_revenues();
+          var result_of_tradingprofit;
+          //fith chart  average check
+          var fith_names = [" ", " " , " "];
+          var fith_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_fith = [0,0,0,0,0,0,0,0,0];
+          var result_of_average_check;
+          // sixth sku 
+          var sixth_names = [" ", " " , " "];
+          var sixth_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_sixth = create_array_of_revenues();
+          var result_of_average_check;
+          var array_of_names_year = [];
+          let array_of_revenues_year = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+          var  result_of_year;
+          // seventh sold goood
+          var seventh_names = [" ", " " , " "];
+          var seventh_days_line_y = create_array_of_revenues();
+          var array_of_company_revenue_seventh = create_array_of_revenues();
+          var result_of_average_check;
+          var array_of_names_year = [];
+          let array_of_revenues__ = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+          var  result_of_year; 
+          //number of sales 
+          
+          // brand per year
+          //var name = document.getElementById("s1").value;
+          var array_of_labels = ["Январь" , "Февраль" , "Март" , "Апрель" , "Май" , "Июнь" , "Июль" , "Август" , "Сентябрь" , "Октябрь" , "Ноябрь" ,"Декабрь"];
+          let array_of_revenue = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+          var type_of_date; //month , week , day ;
+          var date_for_data = " " ;
+
+          //consumtions data 
+          var consumptions_names = [];
+          var consumptions_result = create_array_of_revenues();
+
+// calculate data for brand 
+
+async function process_data_for_brand( type_of_date  , dateSince , dateTo){
+    
+    
+
+    console.log(type_of_date);
+    if(type_of_date == "month"){
+
+      Process_data_revenue(dateSince , dateTo  , names , type_of_date);
+
+      
+      //get_number_of_sales_companies(second_names,array_of_company_revenue_second ,"month");
+      //get_number_of_trading_profit(fourth_names , array_of_company_revenue_fourth , "month" );
+      //get_data_about_average_check(fith_names,array_of_company_revenue_fith,"month");
+      
+      //get_data_about_consumptions(third_names , array_of_company_revenue_third , "month");
+      //setTimeout(Create_chart_consumptions,2000);
+      //setTimeout(Create_chart_average_check,2500);
+ 
+      //etTimeout(Create_chart_trade_revenue,2000)
+      //setTimeout(Create_chart_trading_profit,2000)
+      
+
+    }
+    if(type_of_date == "week"){
+
+      Process_data_revenue_week(dateSince , dateTo , days_line_y , "week");
+
+      //get_number_of_sales_companies(second_names,array_of_company_revenue_second ,"week");
+      //get_number_of_trading_profit(fourth_names , array_of_company_revenue_fourth , "week");
+      //get_data_about_average_check(fith_names,array_of_company_revenue_fith,"week");
+
+      //get_data_about_consumptions(third_names , array_of_company_revenue_third , "week");
+      //setTimeout(Create_chart_consumptions ,2000);
+      //setTimeout(Create_chart_average_check,1500);
+
+      //setTimeout(Create_chart_trade_revenue,1000)
+      //setTimeout(Create_chart_trading_profit,1000)
+      //setTimeout(Create_chart(type_of_date),1000);
+      
+      
+    }
+
+    if(type_of_date == "day"){
+
+      Process_data_revenue_per_day(dateSince , dateTo ,days_line_y ,"day" );
+
+      //get_number_of_sales_companies(second_names,array_of_company_revenue_second ,"day");
+      //get_number_of_trading_profit(fourth_names , array_of_company_revenue_fourth , "day");
+      //get_data_about_average_check(fith_names,array_of_company_revenue_fith,"day");
+      //setTimeout(Create_chart_consumptions ,2000);
+      //setTimeout(Create_chart_average_check,1500);
+ 
+      //setTimeout(Create_chart_trade_revenue,1000)
+     //setTimeout(Create_chart_trading_profit,1000)
+    
+
+
+    }
+
+}
+
+
+
+
+async function Process_data_revenue_per_day(dateSince , dateTo , days_line_y , type_of_date){
+
+
+         
+      var d_since = dateSince;
+      var d_to= dateTo;
+      url =" http://1c.hayler.ru/api/hs/revenue/total?token=Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi&DataSince="+d_since+"&DataTo="+d_to+"&type_of_period="+type_of_date;
+      
+
+      //get json
+        var response =await fetch(url);
+        var result  = await response.json();
+        console.log("Response from server" ,result);
+        
+        for ( var i =0; i<result.length; i++){
+           days_line_y[i] = result[i].day;
+           array_of_company_revenue[i] = result[i].revenue;
+           console.log(days_line_y[i]);
+           console.log(array_of_company_revenue[i]);
+        }
+        setTimeout(Create_chart_day,3000);
+
+        }        
+
+  async function Process_data_revenue(dateSince , dateTo , names , type_of_date){
+    var d_since = dateSince;
+    var d_to = dateTo;
+
+         
+      var d_since = dateSince;
+      var d_to= dateTo;
+      url =" http://1c.hayler.ru/api/hs/revenue/total?token=Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi&DataSince="+d_since+"&DataTo="+d_to+"&type_of_period="+type_of_date;
+      
+
+      //get json
+        var response =await fetch(url);
+        var result  = await response.json();
+        console.log("Response from server" ,result);
+       
+        
+        for ( var i =0; i<result.length; i++){
+          console.log("name:", result[i].month)
+           names[i] = result[i].month;
+           
+           array_of_company_revenue[i] = result[i].revenue;
+           
+        }
+          console.log("Results:" , array_of_company_revenue)
+          console.log("Names:" , names)
+          setTimeout(Create_chart,3000);
+
+        }
+
+        
+  async function Process_data_revenue_week(dateSince , dateTo , days_line_y , type_of_date){
+    
+       
+    var d_since = dateSince;
+      var d_to= dateTo;
+      url =" http://1c.hayler.ru/api/hs/revenue/total?token=Aak6Fwm000Sc-78309-LLgrz63bbD5-098Vvewlkvi&DataSince="+d_since+"&DataTo="+d_to+"&type_of_period="+type_of_date;
+    
+ 
+  let response = await fetch(url);
+  var result  = await response.json();
+  
+ 
+  position = 0
+  current = result[0].week;
+    //summ array
+    for (var i = 0; i < result.length ; i++){
+
+      if(current == result[i].week){
+        array_of_company_revenue[position] =result[i].revenue;
+        days_line_y[position] = current; 
+            
+      }
+      else{
+        position++;
+        current = result[i].week;
+        array_of_company_revenue[position] = result[i].revenue;
+        days_line_y[position]= current;
+      }
+       
+        
+    }
+ 
+    //days_line_y[week] = week;
+     //console.log(days_line_y[i] , "week")
+     //array_of_company_revenue[week] += result[i].revenue;
+     //console.log(array_of_company_revenue[i],"revenue");
+     //week++;
+    
+  
+    console.log(days_line_y , "week")
+    Create_chart_day(type_of_date);
+  }
+
+
+
+//get result per month 
+
+//may use it for week period
+function Create_chart_day(type_of_date){
+  
+  console.log("First:" ,array_of_company_revenue[2] , "Second:" , days_line_y[2]);
+  
+    const data = {
+  labels: days_line_y, 
+ 
+  datasets: [ {
+    type: 'line',
+    label: 'Выручка',
+    data: array_of_company_revenue,
+    fill: false,
+    borderColor: 'rgb(255, 144, 0)'
+  }]
+};;
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding: 0
+    }
+  }
+};
+result_of_month = summ_of_array(array_of_company_revenue);
+window.myChart_month = new Chart(
+    document.getElementById('one'),
+    config
+  );
+  
+  
+  //console.log(date_for_data);
+  document.getElementById("r_one").innerHTML= date_for_data;
+  document.getElementById("result_one").innerHTML = result_of_month+" "+"RUB";
+} 
+
+
+
+function Create_chart(type_of_date){
+  
+  console.log("First:" ,array_of_company_revenue[2] , "Second:" , names[2]);
+  
+    const data = {
+  labels: names, 
+ 
+  datasets: [{
+    type: 'bar',
+    label: 'Выручка',
+    data: array_of_company_revenue,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Выручка',
+    data: array_of_company_revenue,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding: 0
+    }
+  }
+};
+result_of_month = summ_of_array(array_of_company_revenue);
+window.myChart_month = new Chart(
+    document.getElementById('one'),
+    config
+  );
+  
+  
+  //console.log(date_for_data);
+  document.getElementById("r_one").innerHTML= date_for_data;
+  document.getElementById("result_one").innerHTML = result_of_month+" "+"RUB";
+}        
+
+function Create_chart_year(){
+    const data = {
+  labels: ["1","2","3","4","5"], 
+  
+  datasets: [{
+    type: 'line',
+    label: 'Bar Dataset',
+    data: [1623,422,3223,323,32],
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Line Dataset',
+    data: [343,523,32,11,32],
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+
+const config = {
+  type: 'scatter',
+  data: data,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    },
+    layout: {
+            padding:50
+    }
+  }
+};
+
+
+//console.log(result_of_month);
+window.myChart_year = new Chart(
+    document.getElementById('tws'),
+    config
+  );
+ 
+  
+  document.getElementById("result_year").innerHTML = result_of_month+" "+"RUB";
+}    
+
+
+function Create_chart_trade_revenue_days(){
+    const data = {
+        labels: second_days_line_y, 
+        
+        datasets: [{
+          type: 'bar',
+          label: 'Торговая прибыль',
+          data: array_of_company_revenue_second,
+          borderColor: 'rgb(255, 144, 0)',
+          backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+        }, {
+          type: 'line',
+          label: 'Торговая прибыль ',
+          data: array_of_company_revenue_second,
+          fill: false,
+          borderColor: 'rgb(0, 0, 0)'
+        }]
+      };;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      
+      result_of_trade = summ_of_array(array_of_company_revenue_second);
+      window.myChart_trade_revenues = new Chart(
+          document.getElementById('second'),
+          config
+        );
+        
+        
+        document.getElementById("result_two").innerHTML = result_of_trade;
+}
+
+
+function Create_chart_trade_revenue(){
+    const data = {
+        labels: second_names, 
+        
+        datasets: [{
+          type: 'bar',
+          label: 'Торговая прибыль',
+          data: array_of_company_revenue_second,
+          borderColor: 'rgb(255, 144, 0)',
+          backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+        }, {
+          type: 'line',
+          label: 'Торговая прибыль ',
+          data: array_of_company_revenue_second,
+          fill: false,
+          borderColor: 'rgb(0, 0, 0)'
+        }]
+      };;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      
+      result_of_trade = summ_of_array(array_of_company_revenue_second);
+      window.myChart_trade_revenues = new Chart(
+          document.getElementById('second'),
+          config
+        );
+        
+        
+        document.getElementById("result_two").innerHTML = result_of_trade;
+}
+
+
+
+
+//average check 
+function Create_chart_average_check(){
+    const data = {
+        labels: second_names, 
+        
+        datasets: [{
+          type: 'bar',
+          label: 'Средний чек',
+          data: array_of_company_revenue_fith,
+          borderColor: 'rgb(255, 144, 0)',
+          backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+        }, {
+          type: 'line',
+          label: 'Средний чек',
+          data: array_of_company_revenue_fith,
+          fill: false,
+          borderColor: 'rgb(0, 0, 0)'
+        }]
+      };;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      
+      result_of_average_check = summ_of_array(array_of_company_revenue_fith);
+      window.myChart_average_check = new Chart(
+          document.getElementById('fith'),
+          config
+        );
+        
+        
+        document.getElementById("result_five").innerHTML = result_of_average_check;
+}
+
+//average check 
+function Create_chart_average_check_days(){
+    const data = {
+        labels: third_days_line_y, 
+        
+        datasets: [{
+          type: 'bar',
+          label: 'Средний чек',
+          data: array_of_company_revenue_fith,
+          borderColor: 'rgb(255, 144, 0)',
+          backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+        }, {
+          type: 'line',
+          label: 'Средний чек',
+          data: array_of_company_revenue_fith,
+          fill: false,
+          borderColor: 'rgb(0, 0, 0)'
+        }]
+      };;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      
+      result_of_average_check = summ_of_array(array_of_company_revenue_fith);
+      window.myChart_average_check = new Chart(
+          document.getElementById('fith'),
+          config
+        );
+        
+        
+        document.getElementById("result_five").innerHTML = result_of_average_check;
+}
+
+
+  
+
+
+//consumption 
+function Create_chart_consumptions(){
+   console.log("Result of expenses:",third_names);
+    const data = {
+        labels: second_names, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'Расходы',
+    data: array_of_company_revenue_third,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Расходы',
+    data: array_of_company_revenue_third,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_third);
+      console.log(result_of_consumption)
+      window.myChart_trade_revenue = new Chart(
+          document.getElementById('third'),
+          config
+        );
+        
+        
+        document.getElementById("result_three").innerHTML = result_of_consumption;
+        
+}
+
+
+function Create_chart_consumptions_per_days(){
+   console.log("Result of expenses:",third_names);
+    const data = {
+        labels: third_days_line_y, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'Расходы',
+    data: array_of_company_revenue_third,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'Расходы',
+    data: array_of_company_revenue_third,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_third);
+      console.log(result_of_consumption)
+      window.myChart_trade_revenue = new Chart(
+          document.getElementById('third'),
+          config
+        );
+        
+        
+        document.getElementById("result_three").innerHTML = result_of_consumption;
+        
+}
+
+
+function Create_chart_sku_per_days(){
+   console.log("Result of expenses:",third_names);
+    const data = {
+        labels: sixth_days_line_y, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'средняя выручка sku',
+    data: array_of_company_revenue_sixth,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'средняя выручка sku',
+    data: array_of_company_revenue_sixth,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_sixth);
+      console.log(result_of_consumption)
+      window.myChart_sku = new Chart(
+          document.getElementById('fourth'),
+          config
+        );
+        
+        
+        document.getElementById("result_four").innerHTML = result_of_consumption;
+        
+}
+
+function Create_chart_sku(){
+   console.log("Result of expenses:",third_names);
+    const data = {
+        labels: second_names, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'средняя выручка sku ',
+    data: array_of_company_revenue_sixth,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'средняя выручка sku ',
+    data: array_of_company_revenue_sixth,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_sixth);
+      console.log(result_of_consumption)
+      window.myChart_sku = new Chart(
+          document.getElementById('fourth'),
+          config
+        );
+        
+        
+        document.getElementById("result_four").innerHTML = result_of_consumption;
+        
+}
+
+function Create_chart_sold_good_per_days(){
+   console.log("Result of expenses:",seventh_days_line_y);
+    const data = {
+        labels: seventh_days_line_y, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'проданный товар',
+    data: array_of_company_revenue_seventh,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'проданный товар',
+    data: array_of_company_revenue_seventh,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_seventh);
+      console.log(result_of_consumption)
+      window.myChart_sold_good = new Chart(
+          document.getElementById('sixth'),
+          config
+        );
+        
+        
+        document.getElementById("result_six").innerHTML = result_of_consumption;
+        
+}
+
+function Create_chart_sold_good(){
+   console.log("Result of expenses:",seventh_names);
+    const data = {
+        labels: second_names, 
+       
+        datasets: [{
+    type: 'bar',
+    label: 'проданный товар',
+    data: array_of_company_revenue_seventh,
+    borderColor: 'rgb(255, 144, 0)',
+    backgroundColor: 'rgba(255, 144, 0 , 0.2 )'
+  }, {
+    type: 'line',
+    label: 'проданный товар',
+    data: array_of_company_revenue_seventh,
+    fill: false,
+    borderColor: 'rgb(0, 0, 0)'
+  }]
+};;
+      
+      const config = {
+        type: 'scatter',
+        data: data,
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          layout: {
+                  padding:0
+          }
+        }
+      };
+      
+      var result_of_consumption = 0;
+
+      result_of_consumption= summ_of_array(array_of_company_revenue_seventh);
+      console.log(result_of_consumption)
+      window.myChart_sold_good = new Chart(
+          document.getElementById('sixth'),
+          config
+        );
+        
+        
+        document.getElementById("result_six").innerHTML = result_of_consumption;
+        
+}
+
+//clear and destroy chart 
+function clear_data(){
+  //clear data about results 
+  document.getElementById("r_one").innerHTML= " ";
+  document.getElementById("result_one").innerHTML = " ";
+  document.getElementById("result_three").innerHTML = " ";
+  document.getElementById("result_two").innerHTML = " ";
+  document.getElementById("result_four").innerHTML = " ";
+  document.getElementById("result_five").innerHTML = " ";
+  document.getElementById("result_six").innerHTML = " ";
+  //clear data in arraies
+  array_of_revenue.length = 0;
+  array_of_company_revenue.length = 0 ;
+  array_of_company_revenue_week.length = 0 ; 
+  array_of_company_revenue_second.length = 0;
+  array_of_company_revenue_third.length = 0 ;
+  array_of_company_revenue_fourth.length = 0 ;
+  array_of_company_revenue_fith.length = 0;
+  array_of_company_revenue_sixth.length = 0;
+  array_of_company_revenue_seventh.length = 0;
+  second_days_line_y = 0 ;
+  third_days_line_y = 0 ;
+  fourth_days_line_y = 0;
+  fith_days_line_y = 0 ;
+  sixth_days_line_y = 0 ;
+  seventh_days_line_y = 0 ;
+  third_names.length = 0;
+  names.length = 0;
+  week = 0 ;
+  //fill array to avoid  "Na"
+  //third_names = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];  
+  names = [" " , " " , " " , " " , " " , " "];
+  second_days_line_y = create_array_of_revenues()
+  third_days_line_y = create_array_of_revenues()
+  fourth_days_line_y = create_array_of_revenues()
+  fith_days_line_y = create_array_of_revenues()
+  sixth_days_line_y = create_array_of_revenues()
+  seventh_days_line_y =create_array_of_revenues()
+  array_of_company_revenue = create_array_of_revenues()
+  days_line_y = create_array_of_revenues()
+  array_of_company_revenue_week = [0,0,0,0,0,0,0,0,0]
+  array_of_company_revenue_second = create_array_of_revenues()
+  array_of_company_revenue_third = create_array_of_revenues()
+  array_of_company_revenue_fourth = create_array_of_revenues()
+  array_of_company_revenue_fith = create_array_of_revenues()
+  array_of_company_revenue_seventh = create_array_of_revenues()
+  array_of_company_revenue_sixth = create_array_of_revenues()
+  //delete all charts
+  myChart_month.destroy();
+  myChart_trade_revenues.destroy();
+  myChart_trade_revenue.destroy();
+  //myChart_trade_revenues.destroy();
+  myChart_average_check.destroy();
+  myChart_sku.destroy();
+  myChart_sold_good.destroy();
+}
+
+//start of algorithm
+async function start_process()
+{ 
+  //select  interval 
+  var data = new FormData(form);
+  var output = "";
+  for (const entry of data) {
+    output =  entry[1];
+  };
+
+
+  var dateSince = document.getElementById("dateSince").value;
+  var dateTo = document.getElementById("dateTo").value;
+  console.log("dateSince:" , dateSince , "dateTo:",dateTo);
+  //await console.log(selectedOption);
+ // var name = document.getElementById("s1").value;
+
+ 
+
+  process_data_for_brand(output , dateSince , dateTo);
+  //setTimeout(Create_chart_for_company,2000);
+}
+
+
+
+
+//setTimeout(Create_chart_year,6000);  
+
+
+
+//make_fetch();
+//Process_data_revenue();
+//Process_data_revenue_year();
+
+
+
+        </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+a{
+    font-family: 'Montserrat', sans-serif;
+      color:white;
+      text-decoration: none;
+      
+  }
+  a:hover{
+    font-family: 'Montserrat', sans-serif;
+      color:white;
+      text-decoration: none;
+  }
+  h2{
+    font-family: 'Montserrat', sans-serif;
+      color:#FF7300;
+  }
+  h1{
+    font-family: 'Montserrat', sans-serif;
+    color:black;
+  }
+  p{
+    font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+  }
+
+  input[type=text], select {
+     width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  #search_button{
+    /*background-color: rgb(255, 115, 0);*/
+    background-color: #FF7300;
+    color:white;
+    width: 9%;
+    height: 40px;
+    border:#FF7300;
+    border-radius: 4%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+  }
+  #delete_button{
+    background-color: rgb(255, 0, 0);
+    color:white;
+    width: 9%;
+    height: 40px;
+    border:rgb(255, 0, 0);
+    border-radius: 4%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    
+  }
+  #button_brands{
+    /*background-color: rgb(255, 115, 0);*/
+    background-color: #FF7300;
+    color:white;
+    width: 9%;
+    height: 40px;
+    border:#FF7300;
+    border-radius: 4%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+  }
+  #button_companies{
+    /*background-color: rgb(255, 115, 0);*/
+    background-color: #FF7300;
+    color:white;
+    width: 9%;
+    height: 40px;
+    border:#FF7300;
+    border-radius: 4%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+  }
+  .buttons{
+    display:inline;
+    margin-left: 0%;
+
+  }
+  .block_buttons{
+    display:inline;
+    margin-left: 0%;
+  }
+  .text {
+    font-family: 'Montserrat', sans-serif;
+  }
+  .canvas-container {
+display: flex;
+width: 100%; 
+
+
+}
+.canvas-container_2 {
+display: flex;
+
+
+
+}
+
+.cv {
+
+padding-right: 125px;
+
+}
+
+.options_style{
+display: flex;
+width:60%;
+}
+.title_of_canvas{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 28px;
+}
